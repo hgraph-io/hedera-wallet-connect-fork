@@ -72,12 +72,10 @@ describe('DAppSigner', () => {
     let signer: DAppSigner
 
     beforeEach(async () => {
-      const checkPersistedStateSpy = jest.spyOn(connector as any, 'checkPersistedState')
-      checkPersistedStateSpy.mockReturnValue([fakeSession])
-
       await connector.init({ logger: 'error' })
 
-      checkPersistedStateSpy.mockRestore()
+      // @ts-ignore
+      connector.signers = connector.createSigners(fakeSession)
 
       signer = connector.signers[0]
 
